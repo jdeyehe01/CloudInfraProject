@@ -27,9 +27,9 @@ public class HumainResourceView extends CssLayout implements View {
 
 		// Have some data
 		List<User> people = Arrays.asList(
-				new User("TOTO","TITI","TEST","TEST"),
-				new User("TUTU","DUPOND","TT","YY"),
-				new User("BOBY","BOBY","BOBY","BOBY")
+				new User("1","TOTO","TITI","TEST"),
+				new User("2","TUTU","DUPOND","TT"),
+				new User("3","BOBY","BOBY","BOBY")
 				);
 
 		// Create a grid bound to the list
@@ -38,7 +38,6 @@ public class HumainResourceView extends CssLayout implements View {
 		grid.addColumn(User::getLastName).setCaption("Nom");
 		grid.addColumn(User::getFirstName).setCaption("Prénom");
 		grid.addColumn(User::getEmail).setCaption("E-mail");
-		grid.addColumn(User::getFunction).setCaption("Fonction");
 
 		centeringLayout.addComponent(grid);
 		addComponents(buildMenuBar(),centeringLayout);

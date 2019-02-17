@@ -1,31 +1,33 @@
 package com.esgi.fr.CloudProject.Model;
 
 public class User {
-	private String firstName;
-	private String lastName;
+	private String firstname;
+	private String lastname;
 	private String email;
-	private String function;
+	private String username;
+	private String _id;
 
-		
+		public User() {
+		}
 
-	public User(String firstName, String lastName, String email, String function) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public User(String _id , String firstname, String lastname, String email) {
+		this._id = _id;
+		this.firstname = firstname;
+		this.lastname = lastname;
 		this.email = email;
-		this.function = function;
 	}
 	
 	public String getFirstName() {
-		return firstName;
+		return firstname;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setFirstName(String firstname) {
+		this.firstname = firstname;
 	}
 	public String getLastName() {
-		return lastName;
+		return lastname;
 	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setLastName(String lastname) {
+		this.lastname = lastname;
 	}
 	public String getEmail() {
 		return email;
@@ -33,15 +35,19 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getFunction() {
-		return function;
-	}
-	public void setFunction(String function) {
-		this.function = function;
-	}
-	
+
 	@Override
 	public String toString() {
-		return "User : firstName : " + firstName + ", lastName :" + lastName + ", email :" + email + ", function :" + function;
+		return "User [firstname=" + firstname + ", lastname=" + lastname + ", email=" + email + ", _id=" + _id + "]";
 	}
+
+	public String get_id() {
+		return _id;
+	}
+
+	public void set_id(String _id) {
+		this._id = _id;
+	}
+	
+	
 }

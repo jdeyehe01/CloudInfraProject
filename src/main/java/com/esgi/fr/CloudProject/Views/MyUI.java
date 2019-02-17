@@ -1,5 +1,7 @@
 package com.esgi.fr.CloudProject.Views;
 
+import java.util.List;
+
 import javax.servlet.annotation.WebServlet;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -8,7 +10,13 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.esgi.fr.CloudProject.Controller.RequestHttp;
+import com.esgi.fr.CloudProject.Model.Group;
 import com.esgi.fr.CloudProject.Model.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.Navigator;
@@ -24,6 +32,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
  * (or tab) or some part of an HTML page where a Vaadin application is embedded.
@@ -36,52 +45,40 @@ public class MyUI extends UI {
 	public static final String HOLIDAYVIEW = "holiday";
 	public static final String RHVIEW = "ressourceHumaine";
 	private Navigator navigator;
-    User loggedInUser;
+	public static User LOGGED_USER;
 
 
-    @Override
-    protected void init(VaadinRequest vaadinRequest) {
-    	Client client = ClientBuilder.newClient();
-    	WebTarget webTarget = client.target("https://reqres.in/api/users/2");
-    	Invocation.Builder incationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-    	Response response = incationBuilder.get();
-    	String res = response.readEntity(String.class);
-    	
-    	setSizeFull();
-        getPage().setTitle("Cloud Project");
-        navigator = new Navigator(this, this);
-        System.out.println(res);
-//        User toto = new User("BOBY","BOBY","BOBY","BOBY");
-//        this.setLoggedInUser(toto);
-        navigator.addViewChangeListener(new ViewChangeListener() {
-			
+	@Override
+	protected void init(VaadinRequest vaadinRequest) {
+
+		setSizeFull();
+		getPage().setTitle("Cloud Project");
+		navigator = new Navigator(this, this);
+				
+		navigator.addViewChangeListener(new ViewChangeListener() { 
+
 			@Override
 			public boolean beforeViewChange(ViewChangeEvent event) {
-				if(  ( (MyUI)UI.getCurrent()).getLoggedInUser() == null && event.getNewView() instanceof HumainResourceView ||  ( (MyUI)UI.getCurrent()).getLoggedInUser() == null && event.getNewView() instanceof HolidaysView ) {
-                    Notification.show("Permission denied", Type.ERROR_MESSAGE);
-                    return false;
-				}
+			
 				
+    			if(  LOGGED_USER == null && event.getNewView() instanceof HumainResourceView ||  LOGGED_USER == null && event.getNewView() instanceof HolidaysView ) {
+					Notification.show("Permission denied", Type.ERROR_MESSAGE);
+					return false;
+				}
+
 				return true;
 			}
 		});
-        navigator.addView("", new LoginView());
-        navigator.addView(RHVIEW,new HumainResourceView() );        
-        navigator.addView(HOLIDAYVIEW, new HolidaysView());
-        }
-    
-    public User getLoggedInUser(){
-        return loggedInUser;
-   }
+		navigator.addView("", new LoginView());
+		navigator.addView(RHVIEW,new HumainResourceView() );        
+		navigator.addView(HOLIDAYVIEW, new HolidaysView());
+	}
 
-   public void setLoggedInUser(User user){
-        loggedInUser = user;
-  }
 
-    @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
-    @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
-    public static class MyUIServlet extends VaadinServlet {
-    }
+	@WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
+	@VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
+	public static class MyUIServlet extends VaadinServlet {
+	}
 }
 
 

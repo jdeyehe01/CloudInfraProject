@@ -30,8 +30,7 @@ public class HolidaysView extends CssLayout implements View{
 		submit = new Button("Soumettre");
 		buildUI();
     	setSizeFull();
-    	User u = ((MyUI)UI.getCurrent()).getLoggedInUser();
-
+    	User u = MyUI.LOGGED_USER;
 	}
 	
 	private Component buildMenuBar() {
