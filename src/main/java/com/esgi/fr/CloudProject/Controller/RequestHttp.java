@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 public class RequestHttp {
 
 	private final static String BASE_URL = "https://console.jumpcloud.com/api/";
-	private final static String API_KEY = "fa28024f6d819b0e24bd625388fe01712b39ca25";  
+	private final static String API_KEY = "f008fd22e81d9370464f73b2c475ee3c04b2809d";  
 
 	public static String getResponse(String endPoint) {
 		Response response = getInvocation(endPoint).get();

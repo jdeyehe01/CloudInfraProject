@@ -42,7 +42,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @Theme("mytheme")
 public class MyUI extends UI {
-	public static final String HOLIDAYVIEW = "holiday";
+	public static final String EMPLOYEE_VIEW = "employee";
 	public static final String RHVIEW = "ressourceHumaine";
 	private Navigator navigator;
 	public static User LOGGED_USER;
@@ -61,7 +61,7 @@ public class MyUI extends UI {
 			public boolean beforeViewChange(ViewChangeEvent event) {
 			
 				
-    			if(  LOGGED_USER == null && event.getNewView() instanceof HumainResourceView ||  LOGGED_USER == null && event.getNewView() instanceof HolidaysView ) {
+    			if(  LOGGED_USER == null && event.getNewView() instanceof HumainResourceView ||  LOGGED_USER == null && event.getNewView() instanceof EmployeeView ) {
 					Notification.show("Permission denied", Type.ERROR_MESSAGE);
 					return false;
 				}
@@ -70,8 +70,7 @@ public class MyUI extends UI {
 			}
 		});
 		navigator.addView("", new LoginView());
-		navigator.addView(RHVIEW,new HumainResourceView() );        
-		navigator.addView(HOLIDAYVIEW, new HolidaysView());
+
 	}
 
 

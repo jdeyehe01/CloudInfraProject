@@ -22,9 +22,9 @@ public class Authentification{
         env.put(Context.SECURITY_AUTHENTICATION, "simple");
         
         //Project
-       // env.put(Context.SECURITY_PRINCIPAL, "uid="+username+", ou=Users, o=5bffceccfeb61115cd76f65a, dc=jumpcloud, dc=com");
+        env.put(Context.SECURITY_PRINCIPAL, "uid="+username+", ou=Users, o=5bffceccfeb61115cd76f65a, dc=jumpcloud, dc=com");
         
-        env.put(Context.SECURITY_PRINCIPAL, "uid="+username+",ou=Users,o=5bffcfc3bfce622efd60ca5e,dc=jumpcloud,dc=com");
+        //env.put(Context.SECURITY_PRINCIPAL, "uid="+username+",ou=Users,o=5bffcfc3bfce622efd60ca5e,dc=jumpcloud,dc=com");
         env.put(Context.SECURITY_CREDENTIALS, password);
 
 // Create the initial context

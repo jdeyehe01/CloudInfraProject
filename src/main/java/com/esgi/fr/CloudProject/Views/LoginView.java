@@ -32,7 +32,7 @@ public class LoginView extends CssLayout implements View {
 	private TextField username;
 	private PasswordField password;
 	private Button login;
-	private HolidaysView holidayView;
+	private EmployeeView employeeView;
 	private Group[] groupUser;
 
 	
@@ -95,10 +95,14 @@ public class LoginView extends CssLayout implements View {
 					boolean isHRUser = isHumanResourceUser(MyUI.LOGGED_USER.get_id());
 
 					if(!isHRUser) {
-						n.navigateTo(MyUI.HOLIDAYVIEW);						
+						n.addView(MyUI.EMPLOYEE_VIEW, new EmployeeView());
+						n.navigateTo(MyUI.EMPLOYEE_VIEW);						
 					}
 					else {
-						n.navigateTo(MyUI.RHVIEW);
+						//n.navigateTo(MyUI.RHVIEW);
+						n.addView(MyUI.RHVIEW,new HumainResourceView() );        
+						n.navigateTo(MyUI.RHVIEW);		
+					
 					}
 				}
 			}
@@ -122,17 +126,15 @@ public class LoginView extends CssLayout implements View {
 	}
 	
 	public boolean isHumanResourceUser(String idUser) {
-//		https://console.jumpcloud.com/api/v2/usergroups/5c6874b745886d3955aa0856/membership
 		
 		String url = "V2/users/"+idUser+"/memberof";
 
 		String jsonResult = RequestHttp.getResponse(url);		
-		JsonArray jsonArray = new JsonParser().parse(jsonResult).getAsJsonArray();
-//		JsonElement jsonElement = JObjet.get("id");
+		JsonArray jsonArray = new JsonParser().parse(jsonResult).getAsJsonArray();	
 		String id = jsonArray.get(0).getAsJsonObject().get("id").getAsString();
 		
 		for(Group g : groupUser) {
-			if(g.getId().equals(id) && g.getName().equals("TestGroup") ) {
+			if(g.getId().equals(id) && g.getName().equals("Human Resources") ) {
 				return true;
 			}
 		}

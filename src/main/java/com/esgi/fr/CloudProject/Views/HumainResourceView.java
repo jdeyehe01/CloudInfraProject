@@ -3,7 +3,13 @@ package com.esgi.fr.CloudProject.Views;
 import java.util.Arrays;
 import java.util.List;
 
+import com.esgi.fr.CloudProject.Controller.RequestHttp;
+import com.esgi.fr.CloudProject.Model.Holiday;
 import com.esgi.fr.CloudProject.Model.User;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
@@ -14,32 +20,33 @@ import com.vaadin.ui.MenuBar.MenuItem;
 
 public class HumainResourceView extends CssLayout implements View {
 	
-	private Component buildMenuBar() {
-		MenuBar barMenu = new MenuBar();
-		MenuItem employee = barMenu.addItem("Employer");
-		MenuItem rh = barMenu.addItem("Ressource humaine");
-		return barMenu;
-	}
-
+	
 	HumainResourceView() {
 		VerticalLayout centeringLayout = new VerticalLayout();
 		centeringLayout.setStyleName("center");
 
 		// Have some data
-		List<User> people = Arrays.asList(
-				new User("1","TOTO","TITI","TEST"),
-				new User("2","TUTU","DUPOND","TT"),
-				new User("3","BOBY","BOBY","BOBY")
-				);
+		User[] users = geAllUser();
 
 		// Create a grid bound to the list
 		Grid<User> grid = new Grid<>();
-		grid.setItems(people);
+		grid.setItems(users);
 		grid.addColumn(User::getLastName).setCaption("Nom");
 		grid.addColumn(User::getFirstName).setCaption("Prénom");
 		grid.addColumn(User::getEmail).setCaption("E-mail");
+		grid.setResponsive(true);
 
 		centeringLayout.addComponent(grid);
-		addComponents(buildMenuBar(),centeringLayout);
+		addComponents(centeringLayout);
 	}
+	
+	private User[] geAllUser() {
+		
+		String res = RequestHttp.getResponse("systemusers");		
+		JsonObject JObjet = new JsonParser().parse(res).getAsJsonObject();
+		JsonElement jsonElement = JObjet.get("results");
+		User[] allUser = new Gson().fromJson(jsonElement, User[].class);
+		return allUser;
+	}
+	
 }
